@@ -1,13 +1,14 @@
 // Variable dependencies/Packages
 const inquirer = require('inquirer');
-const db = require('./db/connection');
+const db = require('./db/connection.js');
 
 //Start server after DB connection
-db.connect(err => {
+db.connect((err) => {
     if (err) throw err;
     console.log('Database Connected successfully');
     employee_tracker();
-});
+  });
+  
 
 // Function to start the application
 let employee_tracker = function () {
@@ -31,24 +32,26 @@ let employee_tracker = function () {
             db.query(`SELECT * FROM department`, (err, result) => {
                 if (err) throw err;
                 console.log("Viewing All Departments: ");
-                console.log(result);
+                console.table(result);
                 employee_tracker();
             });
         } else if (answers.prompt === 'View all roles') {
-            db.query(`SELECT * FROM role`, (err, result) => {
+            db.query(`SELECT role.id, role.title, role.salary, department.name AS department 
+              FROM role 
+              LEFT JOIN department ON role.department_id = department.id`, (err, result) => {
                 if (err) throw err;
                 console.log("Viewing all roles: ");
-                console.log(result);
+                console.table(result);
                 employee_tracker();
             });
         } else if (answers.prompt === 'View all employees') {
             db.query(`SELECT * FROM employee`, (err, result) => {
                 if (err) throw err;
                 console.log("Viewing all employees: ");
-                console.log(result);
+                console.table(result);
                 employee_tracker();
             });
-        } else if (answers.prompt === 'Adda department') {
+        } else if (answers.prompt === 'Add a department') {
             inquirer.prompt([{
                 //Adding a department
                 type: 'input',
@@ -56,6 +59,7 @@ let employee_tracker = function () {
                 message: 'What is the name of the department?',
                 validate: departmentInput => {
                     if (departmentInput) {
+                        console.log('Completed: Department has been updated!');
                         return true;
                     } else {
                         console.log('Please add a department!');
@@ -80,6 +84,7 @@ let employee_tracker = function () {
                         message: 'What is the name of the role?',
                         validate: roleInput => {
                             if (roleInput) {
+                                console.log('Completed: Role has been added!');
                                 return true;
                             }else {
                                 console.log('No Role added, Please add a role');
@@ -94,6 +99,7 @@ let employee_tracker = function () {
                         message: 'What is the salary for the role?',
                         validate: salaryInput => {
                             if (salaryInput) {
+                                console.log('Completed: Salary has been added!');
                                 return true;
                             }else {
                                 console.log('Please add a Salary');
@@ -141,9 +147,10 @@ let employee_tracker = function () {
                         message: 'What is the employees last name?',
                         validate: lastNameInput => {
                             if (lastNameInput) {
+                                console.log('Completed: Last name added');
                                 return true;
                             }else {
-                                console.log('Please add a salary');
+                                console.log('Please add employees last name');
                                 return false;
                             }
                         }
@@ -169,6 +176,7 @@ let employee_tracker = function () {
                         message: 'Name of the employees manager',
                         validate: managerInput => {
                             if (managerInput) {
+                                console.log('Completed: Manager name has been updated!');
                                 return true;
                             } else {
                                 console.log('Please enter a managers name');
@@ -228,7 +236,7 @@ let employee_tracker = function () {
                             var role = result[i];
                         }
                     }
-                    db.query(`UPDATE employee SET ? WHERE ?`, [{role_id: role}, {last_name: name}], (err, result) => {
+                    db.query(`UPDATE employee SET ? WHERE ?`, [{role_id: role}, {last_name: lastname}], (err, result) => {
                         if (err) throw err;
                         console.log(`Updated ${answers.employee} role to the database.`)
                         employee_tracker();
