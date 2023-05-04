@@ -4,7 +4,7 @@ const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: 'Bootcamp123',
-    database: 'employee_tracker'
+    database: 'employee_tracker_db'
 });
 
 module.exports = db;
