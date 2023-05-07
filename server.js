@@ -223,20 +223,25 @@ let employee_tracker = function () {
                         message: 'What is the employee role?',
                         choices: () => {
                             var array = [];
+                            //console.log(result);
                             for (var i = 0; i < result.length; i++) {
                                 array.push(result[i].title);
                             }
                             var newArray = [... new Set(array)];
+                            //console.log(newArray);
                             return newArray;
                         }
                     }
                 ]).then ((answers) => {
+                    //console.log(answers);
+                    var role;
                     for (var i = 0; i < result.length; i++) {
                         if (result[i].title === answers.role) {
-                            var role = result[i];
+
+                        role = result[i].role_id;
                         }
                     }
-                    db.query(`UPDATE employee SET ? WHERE ?`, [{role_id: role}, {last_name: lastname}], (err, result) => {
+                    db.query(`UPDATE employee SET ? WHERE ?`, [{role_id: role}, {last_name: answers.employee}], (err, result) => {
                         if (err) throw err;
                         console.log(`Updated ${answers.employee} role to the database.`)
                         employee_tracker();
