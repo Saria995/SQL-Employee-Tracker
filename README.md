@@ -1,7 +1,12 @@
 # SQL-Employee-Tracker
 
 ## Description
+Developers frequently have to create interfaces that allow non-developers to easily view and interact with information stored in databases. For this week's challenge, we are required to use Node.JS, Inquirer and MySQL to build a command-line application from scratch to manage a company's employee database.
 
+## Installtion
+1. Open the terminal window and install your NPM package and required dependencies by typing npm i
+2. Once you have the dependencies installed connect your mysql2 to connect to your database and perform queries by typing mysql - u root -p. This will intialise MySQL.
+3. Once you have run those commands run the server.js command to invoke the functionality.
 
 ## User Story
 
@@ -32,3 +37,23 @@ THEN I am prompted to enter the employee’s first name, last name, role, and ma
 WHEN I choose to update an employee role
 THEN I am prompted to select an employee to update and their new role and this information is updated in the database 
 ```
+
+## Screenshots of Terminal
+
+### Prompt Screen
+![Alt text](Assets/Screenshot%202023-05-08%20172521.png)
+
+### Departments Table
+![Alt text](Assets/departments.png)
+
+### Add a Role
+![Alt text](Assets/Add%20a%20role.png)
+
+### Roles table
+![Alt text](Assets/Viewing%20all%20roles.png)
+
+## Link to demo
+https://drive.google.com/file/d/1DWZIbGHtme9UpNT8A2JH_53YyNywJB3F/view
+
+## Link to Github Repository
+https://github.com/Saria995/SQL-Employee-Tracker.git 
